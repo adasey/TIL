@@ -3,6 +3,7 @@ package effactive_java.snd;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.DriverPropertyInfo;
 
 public class ObjectGenDel {
     // 클래스는 생성자와 별도로 정적 팩토리 매세드를 제공할 수 있음. (static factory method)
@@ -48,11 +49,36 @@ public class ObjectGenDel {
        사용자 제공자 프레임워크 패턴에는 여러 변형이 있다. 서비스 접근 API는 공급자가 제공하는 것보다 더 풍부한 서비스 인터페이스를 클라이언트에 반환할 수 있다.
        브리지 패턴(Bridge Pattern)이 그 경우이다. 의존 객체 주입 (dependency injection, 의존성 주입) 프레임워크도 강력한 서비스 제공자라고 할 수 있다.
     * */
-    Connection connection;
-    Driver driver;
-    DriverManager driverManager;
+    public Connection connection;
+    public Driver driver;
+    public DriverManager driverManager;
 
+    public DriverPropertyInfo driverPropertyInfo = new DriverPropertyInfo("", "");
+
+    public DriverManager getDriverManager() {
+        return driverManager;
+    }
     /*
+    지금부터는 단점이다.
 
+    1. 상속을 하려면 public이나 protected 생성자가 필요하니 정적 팩터리 메서드만 제공하면 하위 클래스를 만들 수 없다.
+       이는 컬렉션 프레임워크의 유틸리티 구현 클래스들은 상속할 수 없다. 상속보다 컴포지션을 사용하도록 유도하고 불변 타입으로 만들려면 이 제약을 지켜야 하기 때문에
+       반드시 단점은 아니다.
+
+    2. 정적 팩토리 메서드는 프로그래머가 찾기 어렵다. 생성자처럼 API 설명에 명확히 드러나지 않는다.
+       사용자가 정적 팩터리 메서드 방식 클래스를 인스턴스화 할 방법을 알아내야 한다. 아직은 자바독(java 파일에 작성하는 설명 주석)에서 스스로 처리한다면 좋겠지만
+       API 문서를 잘 써놓고 메서드 이름도 널리 알려진 규약을 따라 짓는 식으로 문제를 완화해야 한다.
+    * */
+
+    // 정적 메서드 명명 방식
+    /*
+    from : 매개변수 하나를 받아 해당 타입의 인스턴스 반환 형변환 메서드
+    of : 여러 매개변수를 받아 적합한 타입의 인스턴스 반환 집계 메서드
+    valueOf : from, of의 상세 버전
+    instance or getInstance : 매개변수를 받을 시 매개변수로 명시한 인스턴스를 반환하지만, 같은 인스턴스임을 보장하지 않는다.
+    create or newInstance : 위와 같으나 매번 새로운 인스턴스 생성을 반환함 보장
+    getType : getInstance와 같으나 생성할 클래스가 아닌 다른 클래스에 팩터리 메서드를 정의할 때. Type은 팩터리 메서드가 반환할 객체의 타입
+    newType : newInstance와 같으나 생성할 클래스가 아닌 다른 클래스에 팩터리 메서드를 정의할 때. Type은 팩터리 메서드가 반환할 객체의 타입
+    type : getType과 newType 대신 사용하면 됨
     * */
 }
