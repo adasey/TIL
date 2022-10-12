@@ -1,12 +1,9 @@
 package effactive_java.snd;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.DriverPropertyInfo;
+import java.sql.*;
 
 public class ObjectGenDel {
-    // 클래스는 생성자와 별도로 정적 팩토리 매세드를 제공할 수 있음. (static factory method)
+    // item 1 : 클래스는 생성자와 별도로 정적 팩토리 매세드를 제공할 수 있음. (static factory method)
 
     // 클래스가 정적 메소드와 생성자를 동시에 제공할 때 정적 팩토리 메소드가 제공하는 장점 5가지가 있다.
     /*
@@ -49,15 +46,27 @@ public class ObjectGenDel {
        사용자 제공자 프레임워크 패턴에는 여러 변형이 있다. 서비스 접근 API는 공급자가 제공하는 것보다 더 풍부한 서비스 인터페이스를 클라이언트에 반환할 수 있다.
        브리지 패턴(Bridge Pattern)이 그 경우이다. 의존 객체 주입 (dependency injection, 의존성 주입) 프레임워크도 강력한 서비스 제공자라고 할 수 있다.
     * */
-    public Connection connection;
-    public Driver driver;
-    public DriverManager driverManager;
 
-    public DriverPropertyInfo driverPropertyInfo = new DriverPropertyInfo("", "");
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        String driver = "com.mariadb.jdbc.Driver"; // mariadb, mysql 등 JDBC를 통해 connection을 지원하는 DB의 Driver에 접근해 실행하기 위한 경로
 
-    public DriverManager getDriverManager() {
-        return driverManager;
+        Class.forName(driver); // new DriverManage instance - DriverManager를 실행하도록 해당 JDBC의 Driver static을 실행한다.
+
+        DriverManager.getConnection("url", "user", "pw"); // getConnection을 통해 사용자는 서비스 접근 API를 활용한다.
     }
+
+    // JDBC 내부 동작
+    // public final class Driver implements java.sql.Driver { - Driver 인터페이스의 구현체 사용자는 구현체인 Driver을 알 필요없이 경로를 제공하면 Class.forName을 통해 클래스를 호출한다.
+    /*
+    static {
+        try {
+            DriverManager.registerDriver(new Driver()); // 제공자 등록 API : DriverManager의 인스턴스를 생성
+        } catch (SQLException e) {
+            // eat
+        }
+    }
+    * */
+
     /*
     지금부터는 단점이다.
 
@@ -81,4 +90,14 @@ public class ObjectGenDel {
     newType : newInstance와 같으나 생성할 클래스가 아닌 다른 클래스에 팩터리 메서드를 정의할 때. Type은 팩터리 메서드가 반환할 객체의 타입
     type : getType과 newType 대신 사용하면 됨
     * */
+}
+
+// item 2 : 생성자의 매개변수가 너무 많을 경우
+/*
+정적 팩터리와 생성자에서 공통적으로 나타나는 제약을 해결하기 위해 사용되는 빌더 패턴이다.
+
+먼저 정적 팩터리이다.
+* */
+
+class  {
 }
