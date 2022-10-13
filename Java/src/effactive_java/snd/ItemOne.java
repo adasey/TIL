@@ -2,7 +2,7 @@ package effactive_java.snd;
 
 import java.sql.*;
 
-public class ObjectGenDel {
+public class ItemOne {
     // item 1 : 클래스는 생성자와 별도로 정적 팩토리 매세드를 제공할 수 있음. (static factory method)
 
     // 클래스가 정적 메소드와 생성자를 동시에 제공할 때 정적 팩토리 메소드가 제공하는 장점 5가지가 있다.
@@ -90,14 +90,4 @@ public class ObjectGenDel {
     newType : newInstance와 같으나 생성할 클래스가 아닌 다른 클래스에 팩터리 메서드를 정의할 때. Type은 팩터리 메서드가 반환할 객체의 타입
     type : getType과 newType 대신 사용하면 됨
     * */
-}
-
-// item 2 : 생성자의 매개변수가 너무 많을 경우
-/*
-정적 팩터리와 생성자에서 공통적으로 나타나는 제약을 해결하기 위해 사용되는 빌더 패턴이다.
-
-먼저 정적 팩터리이다.
-* */
-
-class  {
 }
