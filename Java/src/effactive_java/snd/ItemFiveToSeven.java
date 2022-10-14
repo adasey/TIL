@@ -164,7 +164,7 @@ public class ItemFiveToSeven {
     더 복잡한 캐시에 새 엔트리를 추가하는 방식으로 java.lang.ref
 
     메모리 누수의 3번째는 listener, callback 등이 있다. 클라이언트가 콜백을 등록하고 명확히 해지 하지 않는다면 콜백은 계속 쌓여간다.
-  은 * */
+    * */
 
     public static void main(String[] args) {
         String si = new String("text");
