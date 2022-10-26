@@ -1,4 +1,4 @@
-package effactive_java.snd;
+package effactive_java.second;
 
 public class ItemThreeAndFour {
     // item 3

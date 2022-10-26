@@ -1,7 +1,6 @@
-package effactive_java.snd;
+package effactive_java.second;
 
 import java.util.EmptyStackException;
-import java.util.LinkedHashSet;
 import java.util.regex.Pattern;
 
 public class ItemFiveToSeven {

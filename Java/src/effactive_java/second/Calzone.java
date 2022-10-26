@@ -1,4 +1,4 @@
-package effactive_java.snd;
+package effactive_java.second;
 
 public class Calzone extends Pizza {
     private final boolean sauceInside;

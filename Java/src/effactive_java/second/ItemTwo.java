@@ -1,7 +1,7 @@
-package effactive_java.snd;
+package effactive_java.second;
 
-import static effactive_java.snd.Hawaiian.Pineapple.LITTLE;
-import static effactive_java.snd.Pizza.Topping.*;
+import static effactive_java.second.Hawaiian.Pineapple.LITTLE;
+import static effactive_java.second.Pizza.Topping.*;
 
 public class ItemTwo {
 // item 2 : 생성자의 매개변수가 너무 많을 경우

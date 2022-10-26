@@ -1,4 +1,4 @@
-package effactive_java.snd;
+package effactive_java.second;
 
 import java.io.*;
 import java.lang.ref.Cleaner;
@@ -122,33 +122,69 @@ public class ItemEightAndNine implements AutoCloseable {
     전통적인 자원의 닫힘을 보장하는 수단은 try-finally이다. 예외가 발생하거나 메서드가 반환되는 경우를 포함해서 말이다.
     * */
 
+//    static String first(String path) throws IOException {
+//        BufferedReader br = new BufferedReader(new FileReader(path));
+//        try {
+//            return br.readLine();
+//        } finally {
+//            br.close();
+//        }
+//    }
+//
+//    static void copy(String src, String dst) throws IOException {
+//        InputStream in = new FileInputStream(src);
+//        try {
+//            OutputStream out = new FileOutputStream(dst);
+//            try {
+//                byte[] buf = new byte[BUFFER_SIZE];
+//                int n;
+//                while ((n = in.read(buf)) >= 0)
+//                    out.write(buf, 0, n);
+//            } finally {
+//                out.close();
+//            }
+//        } finally {
+//            in.close();
+//        }
+//    }
+
+    /*
+    이 try-finally 블록은 예외가 모두 발생할 가능성이 있다.
+    first 함수를 예로 들때 기기에 물리적인 오류, 혹은 인터럽트가 발생해 문제가 생긴다면 readLine 메서드가 예외를 던지고, close 메서드도 실패할 것이다.
+    이때 두번째 예외가 첫번째 예외를 완전히 집어삼켜 버린다. 그러면 스택 추적 내역에 첫번째 예외에 관한 정보가 남지 않고 두번째 예외에 대해서만 남는다.
+    이는 디버깅을 매우 어렵게 한다. 이런 문제를 해결하기 위해 try-with-resources를 사용한다.
+    * */
+
     static String first(String path) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(path));
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             return br.readLine();
-        } finally {
-            br.close();
         }
     }
 
     static void copy(String src, String dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        try {
-            OutputStream out = new FileOutputStream(dst);
-            try {
-                byte[] buf = new byte[BUFFER_SIZE];
-                int n;
-                while ((n = in.read(buf)) >= 0)
-                    out.write(buf, 0, n);
-            } finally {
-                out.close();
-            }
-        } finally {
-            in.close();
+        try (InputStream in = new FileInputStream(src);
+             OutputStream out = new FileOutputStream(dst)) {
+            byte[] buf = new byte[BUFFER_SIZE];
+            int n;
+            while ((n = in.read(buf)) >= 0)
+                out.write(buf, 0, n);
         }
+    }
 
-        /*
-        이 try-finally 블록은 예외가 모두 발생할 가능성이 있다.
-        * */
+    /*
+    훨씬 짧고 직관적이다. first 메서드에서 readLine에서 발생한 예외만이 기록된다. close에서 발생한 예외는 더이상 첫번째 예외를 덮지 않는다.
+    이 숨겨진 예외는 스택 추적 내역에 suppressed라는 표를 달고 출력된다. 자바의 Throwable에 추가된 getSuppressed 메서드를 이용하면 숨겨진 예외도
+    가져올 수 있다.
+
+    이때 catch를 사용할 수도 있다.
+    * */
+
+    static String firstCatch(String path) {
+        String defaultValue = "";
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            return br.readLine();
+        } catch (IOException e) {
+            return defaultValue;
+        }
     }
 }

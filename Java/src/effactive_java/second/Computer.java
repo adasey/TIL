@@ -1,4 +1,4 @@
-package effactive_java.snd;
+package effactive_java.second;
 
 public class Computer {
     private final String cpu;
